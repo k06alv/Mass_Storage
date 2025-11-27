@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>Kyshany's page</title>
-</head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,7 +13,7 @@ body {
   margin: 0;
   padding: 20px;
   font-family: Arial, Helvetica, sans-serif;
-  background: #FFC7DF; /* solid light pink */
+  background: #FFC7DF;
   color: white;
   text-align: center;
 }
@@ -26,20 +25,13 @@ h1 {
   text-shadow: 0 0 12px rgba(255,255,255,0.9);
 }
 
-/* Glowy image style */
-img {
-  max-width: 60%;
+img.popup-img {
+  max-width: 80%;
   border-radius: 14px;
   border: 4px solid white;
-  box-shadow: 0 0 16px rgba(255,255,255,0.7);
-  transition: 0.4s;
+  box-shadow: 0 0 18px rgba(255,255,255,0.8);
 }
 
-img:hover {
-  transform: scale(1.05);
-}
-
-/* Text */
 p {
   width: 80%;
   margin: auto;
@@ -48,33 +40,13 @@ p {
   margin-bottom: 35px;
 }
 
-/* Cute buttons */
-a {
-  display: inline-block;
-  background: #FF9BC9;
-  color: white;
-  text-decoration: none;
-  padding: 10px 18px;
-  margin: 6px;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-a:hover {
-  background: #FFCAE9;
-  color: #7A005D;
-  transform: translateY(-3px);
-}
-
-/* Box wrapper to center the grid */
+/* card grid */
 .wrapper {
   width: 100%;
   max-width: 900px;
-  margin: auto;        /* THIS CENTERS THE CARDS */
+  margin: auto;
 }
 
-/* card grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -106,6 +78,39 @@ a:hover {
   color: #555;
   font-size: 14px;
 }
+
+/* Popup style */
+#popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#popupBox {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 90%;
+}
+
+#popupClose {
+  background: #FF80C6;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 12px;
+}
+#popupClose:hover {
+  background: #FFB6E5;
+  color: #7A0060;
+}
 </style>
 </head>
 
@@ -113,9 +118,8 @@ a:hover {
 
 <h1>Mass Storage</h1>
 
-<p>Mass storage is long-term storage like disks, CDs, tapes, and flash drives. It holds lots of data permanently but is slower than main memory because it often uses moving parts. Files are stored in sectors (physical records) and organized into logical records, and a buffer helps temporarily hold data during transfers.</p>
+<p>Mass storage is long-term storage like disks, CDs, tapes, and flash drives. It holds lots of data permanently but is slower than main memory because it often uses moving parts.</p>
 
-<!-- New Wrapper -->
 <div class="wrapper">
   <div class="grid">
     <div class="card" data-type="magnetic">
@@ -125,20 +129,51 @@ a:hover {
 
     <div class="card" data-type="optical">
       <h3>Optical (CD/DVD/Blu-ray)</h3>
-      <p>Uses lasers to read a spiral track. Good for music & movies.</p>
+      <p>Uses lasers to read a spiral track.</p>
     </div>
 
     <div class="card" data-type="flash">
       <h3>Flash (USB / SD)</h3>
-      <p>No moving parts, fast, used in phones and cameras.</p>
+      <p>No moving parts, fast storage.</p>
     </div>
 
     <div class="card" data-type="tape">
       <h3>Magnetic Tape</h3>
-      <p>Very high capacity but slow to access — used for backups.</p>
+      <p>High capacity, slow access.</p>
     </div>
   </div>
 </div>
+
+<!-- Popup Box -->
+<div id="popup">
+  <div id="popupBox">
+    <img id="popupImg" class="popup-img" src="">
+    <br>
+    <div id="popupClose">Close</div>
+  </div>
+</div>
+
+<script>
+// Image paths for each topic
+const images = {
+  magnetic: "https://th.bing.com/th/id/R.68dba630419b9cf931ec8abcb88e0dbf?rik=z64CXlqhFKxZqQ&riu=http%3a%2f%2f1.bp.blogspot.com%2f-vHmm3MvPoN8%2fT4bDTTGiQEI%2fAAAAAAAAAFM%2frb4DH2cRQOA%2fs1600%2fMagnetic%2bDisk%2bnew.jpg&ehk=fgrDkw2qVhZTGLn7T7zTJdDz6n4vNfHLJaW7AQn0fsQ%3d&risl=&pid=ImgRaw&r=0",
+  optical:  "https://upload.wikimedia.org/wikipedia/commons/3/32/CD_autolev_crop.jpg",
+  flash:    "https://upload.wikimedia.org/wikipedia/commons/5/54/USB_Memory_Stick.jpg",
+  tape:     "https://upload.wikimedia.org/wikipedia/commons/2/21/Tape_cartridge.jpg"
+};
+
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    let type = card.getAttribute('data-type');
+    document.getElementById("popupImg").src = images[type];
+    document.getElementById("popup").style.display = "flex";
+  });
+});
+
+document.getElementById("popupClose").onclick = () => {
+  document.getElementById("popup").style.display = "none";
+};
+</script>
 
 </body>
 </html>
